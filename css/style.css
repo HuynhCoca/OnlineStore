@@ -1,0 +1,58 @@
+/* Định dạng nền và chung */
+body {
+    background-color: #f0f8ff; /* Xanh nhạt */
+    font-family: Arial, sans-serif;
+}
+
+/* Tiêu đề */
+h1, h2, h3 {
+    color: #0056b3; /* Xanh đậm */
+}
+
+/* Nút bấm chính */
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #007bff;
+}
+
+.navbar a {
+    color: white !important;
+}
+
+/* Card sản phẩm */
+.card {
+    border: 2px solid #007bff;
+    transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+/* Giỏ hàng */
+.table th, .table td {
+    border-color: #007bff;
+}
+
+/* Nút xóa */
+.btn-danger {
+    background-color: #dc3545;
+}
+/* Số lượng sản phẩm trong giỏ hàng */
+#cart-count {
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    position: relative;
+    top: -5px;
+    left: 5px;
+}

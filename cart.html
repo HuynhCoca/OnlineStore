@@ -3,27 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giỏ hàng</title>
+    <title>Giỏ Hàng</title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">🏠 Cửa Hàng Gia Dụng</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang Chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html">🛒 Giỏ Hàng (<span id="cart-count">0</span>)</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html" id="login-link">🔑 Đăng Nhập</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="logout-link" style="display: none;">🚪 Đăng Xuất</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container mt-5">
-        <h2>Giỏ hàng của bạn</h2>
-        <table class="table">
-            <thead>
+        <h2 class="text-center">🛒 Giỏ Hàng Của Bạn</h2>
+        <table class="table table-bordered">
+            <thead class="table-primary">
                 <tr>
-                    <th>Tên sản phẩm</th>
+                    <th>Sản phẩm</th>
                     <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
                     <th>Hành động</th>
                 </tr>
             </thead>
             <tbody id="cart-items"></tbody>
         </table>
-        <h4>Tổng tiền: <span id="total-price">$0</span></h4>
-        <button id="checkout" class="btn btn-success">Thanh toán</button>
-        <a href="index.html" class="btn btn-secondary">Tiếp tục mua hàng</a>
+
+        <h4 class="text-end">Tổng: <span id="total-price">0</span> $</h4>
+        <button class="btn btn-success w-100" id="checkout-btn">🛍️ Thanh Toán</button>
     </div>
-    
-    <script src="app.js"></script>
+
+    <script src="js/cart.js"></script>
+    <script src="js/navbar.js"></script>
 </body>
 </html>

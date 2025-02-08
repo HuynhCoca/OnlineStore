@@ -3,26 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập</title>
+    <title>Đăng Nhập</title>
+    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
+
     <div class="container mt-5">
-        <h2>Đăng nhập</h2>
-        <form id="login-form">
-            <div class="mb-3">
-                <label for="email">Email</label>
-                <input type="email" id="email" class="form-control" required>
-            </div>
-            <div class="mb-3">
-                <label for="password">Mật khẩu</label>
-                <input type="password" id="password" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Đăng nhập</button>
-            <a href="register.html" class="btn btn-link">Chưa có tài khoản? Đăng ký</a>
-        </form>
+        <h2 class="text-center text-primary">🔑 Đăng Nhập</h2>
+        <div class="card p-4 shadow">
+            <form id="login-form">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mật Khẩu</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">🚪 Đăng Nhập</button>
+            </form>
+            <p class="text-center mt-3">Chưa có tài khoản? <a href="register.html">Đăng ký ngay</a></p>
+        </div>
     </div>
 
-    <script src="app.js"></script>
+    <script src="js/auth.js"></script>
 </body>
 </html>
