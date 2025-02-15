@@ -53,7 +53,7 @@ function fetchRelatedProducts(category, currentProductId) {
                         <div class="card-body">
                             <h6 class="card-title">${product.title}</h6>
                             <p class="card-text text-danger">$${product.price}</p>
-                            <a href="product-detail.html?id=${product.id}" class="btn btn-sm btn-success">🔍 Xem</a>
+                            <a href="product.html?id=${product.id}" class="btn btn-sm btn-success">🔍 Xem</a>
                         </div>
                     </div>
                 `;
