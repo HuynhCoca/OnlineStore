@@ -61,3 +61,11 @@ function clearCart() {
     loadCart();
     updateCartCount();
 }
+
+function getCurrentUser() {
+    let email = localStorage.getItem("currentUser");
+    return email ? JSON.parse(localStorage.getItem(email)) : null;
+}
+function updateUser(user) {
+    localStorage.setItem(user.email, JSON.stringify(user));
+}
