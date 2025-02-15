@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Tiết Sản Phẩm</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+    <!-- 🏠 Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">🏠 Cửa Hàng Online</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Trang Chủ</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cart.html">🛒 Giỏ Hàng (<span id="cart-count">0</span>)</a></li>
+                    <li class="nav-item"><a class="nav-link" href="login.html" id="login-link">🔑 Đăng Nhập</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#" id="logout-link" style="display: none;">🚪 Đăng Xuất</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 🔍 Chi tiết sản phẩm -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <img id="product-image" class="img-fluid rounded shadow" alt="Product Image">
+            </div>
+            <div class="col-md-6">
+                <h2 id="product-title"></h2>
+                <p id="product-description"></p>
+                <h4 class="text-danger">💰 Giá: <span id="product-price"></span>$</h4>
+                <button id="add-to-cart" class="btn btn-primary">🛒 Thêm vào giỏ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/product.js"></script>
+    <script src="js/navbar.js"></script>
+</body>
+</html>

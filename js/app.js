@@ -22,15 +22,17 @@ document.addEventListener("DOMContentLoaded", () => {
             const productCard = document.createElement("div");
             productCard.classList.add("col-md-4", "mb-4");
             productCard.innerHTML = `
-                <div class="card h-100">
-                    <img src="${product.image}" class="card-img-top" alt="${product.title}" style="height: 200px; object-fit: contain;">
-                    <div class="card-body">
-                        <h5 class="card-title">${product.title}</h5>
-                        <p class="card-text">${product.description.substring(0, 100)}...</p>
-                        <p class="card-text"><strong>Giá:</strong> $${product.price}</p>
-                        <button class="btn btn-primary add-to-cart" data-id="${product.id}" data-title="${product.title}" data-price="${product.price}">🛒 Thêm vào giỏ</button>
+                <a href="product.html?id=${product.id}" style="text-decoration: none">
+                    <div class="card h-100">
+                        <img src="${product.image}" class="card-img-top" alt="${product.title}" style="height: 200px; object-fit: contain;">
+                        <div class="card-body">
+                            <h5 class="card-title">${product.title}</h5>
+                            <p class="card-text">${product.description.substring(0, 100)}...</p>
+                            <p class="card-text"><strong>Giá:</strong> $${product.price}</p>
+                            <button class="btn btn-primary add-to-cart" data-id="${product.id}" data-title="${product.title}" data-price="${product.price}">🛒 Thêm vào giỏ</button>
+                        </div>
                     </div>
-                </div>
+                </a>
             `;
             productList.appendChild(productCard);
         });
