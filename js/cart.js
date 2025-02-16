@@ -4,12 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("cart-items").addEventListener("click", (e) => {
         if (e.target.classList.contains("remove-item")) {
             let productId = e.target.dataset.id;
-            removeFromCart(productId);
+
+            var result = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?");
+            if (result) {
+                removeFromCart(productId);
+            } 
         }
     });
 
     document.getElementById("checkout-btn").addEventListener("click", () => {
-        handleCheckout();
+        var result = confirm("Bạn có chắc chắn muốn đặt hàng?");
+        if (result) {
+            handleCheckout();
+        }
     });
 });
 
@@ -38,7 +45,7 @@ function loadCart() {
         row.innerHTML = `
             <td>${item.title}</td>
             <td>${item.price} $</td>
-            <td>1</td>
+            <td>${item.quantity}</td>
             <td>${item.price} $</td>
             <td><button class="btn btn-danger remove-item" data-id="${index}">🗑 Xóa</button></td>
         `;
@@ -89,4 +96,10 @@ function getCurrentUser() {
 // Cập nhật thông tin người dùng vào LocalStorage
 function updateUser(user) {
     localStorage.setItem(user.email, JSON.stringify(user));
+}
+
+// Lấy số lượng sản phẩm trong giỏ hàng
+function getCartCount() {
+    let user = getCurrentUser();
+    return user ? user.cart.length : 0;
 }

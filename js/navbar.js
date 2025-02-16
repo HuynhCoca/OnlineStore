@@ -11,7 +11,11 @@ document.addEventListener("DOMContentLoaded", () => {
 // Cập nhật số lượng giỏ hàng
 function updateCartCount() {
     let user = getCurrentUser();
-    let cartCount = user ? user.cart.length : 0;
+    let carts = user ? user.cart : [];
+    let cartCount = 0;
+    for (item of carts) {
+        cartCount += item.quantity;
+    }
     document.getElementById("cart-count").textContent = cartCount;
 }
 

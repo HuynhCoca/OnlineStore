@@ -101,7 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        user.cart.push(product);
+        let cart = user.cart;
+        let existingProduct = cart.find(item => item.id === product.id);
+        if (existingProduct) {
+            existingProduct.quantity++;
+        } else {
+            cart.push({ id: product.id, title: product.title, price: product.price, quantity: 1 });
+        }
         updateUser(user);
         updateCartCount();
         alert("🛒 Đã thêm vào giỏ hàng: " + product.title);
