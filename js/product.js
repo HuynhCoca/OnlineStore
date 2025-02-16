@@ -31,6 +31,7 @@ function addToCart(product) {
 
     user.cart.push({ id: product.id, title: product.title, price: product.price });
     updateUser(user);
+    updateCartCount();
     alert("🛒 Đã thêm vào giỏ hàng: " + product.title);
 }
 
