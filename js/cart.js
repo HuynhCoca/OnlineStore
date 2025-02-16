@@ -15,14 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("checkout-btn").addEventListener("click", () => {
         var result = confirm("Bạn có chắc chắn muốn đặt hàng?");
         if (result) {
-            // check cart empty
-            cartCount = getCartCount();
-            if (cartCount == 0) {
-                alert("Giỏ hàng của bạn đang trống!");
-                return;
-            }
-            alert("🛍️ Đặt hàng thành công!");
-            clearCart();
+            handleCheckout();
         }
     });
 });
@@ -31,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
 function loadCart() {
     let user = getCurrentUser();
     if (!user) {
-        alert("Bạn cần đăng nhập để xem giỏ hàng!");
+        alert("⚠️ Bạn cần đăng nhập để xem giỏ hàng!");
         window.location.href = "login.html";
         return;
     }
@@ -40,6 +33,12 @@ function loadCart() {
     let cartTable = document.getElementById("cart-items");
     let totalPrice = 0;
     cartTable.innerHTML = "";
+
+    if (cart.length === 0) {
+        cartTable.innerHTML = `<tr><td colspan="5" class="text-center text-danger">🛒 Giỏ hàng trống!</td></tr>`;
+        document.getElementById("total-price").textContent = "0.00";
+        return;
+    }
 
     cart.forEach((item, index) => {
         let row = document.createElement("tr");
@@ -75,10 +74,26 @@ function clearCart() {
     updateCartCount();
 }
 
+// Kiểm tra giỏ hàng trước khi thanh toán
+function handleCheckout() {
+    let user = getCurrentUser();
+    
+    if (!user || user.cart.length === 0) {
+        alert("⚠️ Giỏ hàng trống! Vui lòng thêm sản phẩm trước khi thanh toán.");
+        return;
+    }
+
+    alert("✅ Đặt hàng thành công!");
+    clearCart();
+}
+
+// Lấy thông tin người dùng hiện tại
 function getCurrentUser() {
     let email = localStorage.getItem("currentUser");
     return email ? JSON.parse(localStorage.getItem(email)) : null;
 }
+
+// Cập nhật thông tin người dùng vào LocalStorage
 function updateUser(user) {
     localStorage.setItem(user.email, JSON.stringify(user));
 }
