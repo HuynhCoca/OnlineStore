@@ -47,15 +47,6 @@ h1, h2, h3 {
 .btn-danger {
     background-color: #dc3545;
 }
-/* Số lượng sản phẩm trong giỏ hàng */
-/* #cart-count {
-    font-size: 14px;
-    padding: 5px 10px;
-    border-radius: 50%;
-    position: relative;
-    top: -5px;
-    left: 5px;
-} */
 
 #related-products .card {
     transition: transform 0.3s ease-in-out;
@@ -63,4 +54,9 @@ h1, h2, h3 {
 
 #related-products .card:hover {
     transform: scale(1.05);
+}
+
+footer {
+    background-color: #007bff;
+    color: white;
 }
