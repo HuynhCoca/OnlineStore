@@ -22,17 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
             const productCard = document.createElement("div");
             productCard.classList.add("col-md-4", "mb-4");
             productCard.innerHTML = `
-                <a href="product.html?id=${product.id}" style="text-decoration: none">
+                
                     <div class="card h-100">
+                    <a href="product.html?id=${product.id}" style="text-decoration: none">
                         <img src="${product.image}" class="card-img-top" alt="${product.title}" style="height: 200px; object-fit: contain;">
-                        <div class="card-body">
+                    </a>    
+                        <div class="card-body d-grid gap-2">
                             <h5 class="card-title">${product.title}</h5>
                             <p class="card-text">${product.description.substring(0, 100)}...</p>
                             <p class="card-text"><strong>Giá:</strong> $${product.price}</p>
                             <button class="btn btn-primary add-to-cart" data-id="${product.id}" data-title="${product.title}" data-price="${product.price}">🛒 Thêm vào giỏ</button>
                         </div>
                     </div>
-                </a>
+                
             `;
             productList.appendChild(productCard);
         });
