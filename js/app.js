@@ -42,6 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Hiển thị danh sách sản phẩm
     function displayProducts(products) {
         productList.innerHTML = "";
+
+        if (products.length === 0) {
+            // Nếu không có sản phẩm, hiển thị thông báo
+            productList.innerHTML = `
+                <div class="text-center">
+                    <img src="assets/noProduct.jpeg" alt="Không tìm thấy sản phẩm" style="width: 500px;">
+                </div>
+            `;
+            return;
+        }
+
         products.forEach(product => {
             const productCard = document.createElement("div");
             productCard.classList.add("col-md-4", "mb-4");

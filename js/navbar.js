@@ -4,7 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.getElementById("logout-link").addEventListener("click", () => {
         localStorage.removeItem("currentUser");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
+        alert("Đã đăng xuất thành công!");
     });
 });
 
