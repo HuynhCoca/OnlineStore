@@ -1,54 +1,111 @@
-/* Định dạng nền và chung */
+/* ========== 🌟 CẤU HÌNH CHUNG ========== */
 body {
     background-color: #f0f8ff; /* Xanh nhạt */
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    padding: 15px;
+}
+
+main {
+    padding: 20px;
 }
 
 /* Tiêu đề */
 h1, h2, h3 {
     color: #0056b3; /* Xanh đậm */
+    font-weight: bold;
 }
 
-/* Nút bấm chính */
+/* ========== 🌟 NÚT BẤM ========== */
 .btn-primary {
     background-color: #007bff;
     border: none;
     max-height: 37px;
+    transition: 0.3s ease-in-out;
 }
 
 .btn-primary:hover {
     background-color: #0056b3;
+    transform: scale(1.05);
 }
 
-/* Navbar */
+.btn-danger {
+    background-color: #dc3545;
+    transition: 0.3s ease-in-out;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    transform: scale(1.05);
+}
+
+/* ========== 🌟 NAVBAR ========== */
 .navbar {
     background-color: #007bff;
+    padding: 10px 20px;
 }
 
 .navbar a {
     color: white !important;
+    font-weight: 600;
+    transition: 0.3s;
 }
 
-/* Card sản phẩm */
+.navbar a:hover {
+    color: #ffeb3b !important; /* Màu vàng khi hover */
+}
+
+/* ========== 🌟 CARD SẢN PHẨM ========== */
 .card {
     border: 2px solid #007bff;
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .card:hover {
     transform: scale(1.05);
+    box-shadow: 0px 4px 10px rgba(0, 123, 255, 0.2);
 }
 
-/* Giỏ hàng */
+.card img {
+    height: 200px;
+    object-fit: contain;
+    transition: 0.3s ease-in-out;
+}
+
+.card img:hover {
+    transform: scale(1.1);
+}
+
+/* ========== 🌟 GIỎ HÀNG ========== */
 .table th, .table td {
     border-color: #007bff;
 }
 
-/* Nút xóa */
-.btn-danger {
-    background-color: #dc3545;
+.table thead {
+    background-color: #007bff;
+    color: white;
 }
 
+/* Nút xóa sản phẩm */
+.remove-item {
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.remove-item:hover {
+    background-color: #c82333;
+    color: white;
+}
+
+/* ========== 🌟 SẢN PHẨM LIÊN QUAN ========== */
 #related-products .card {
     transition: transform 0.3s ease-in-out;
 }
@@ -57,23 +114,53 @@ h1, h2, h3 {
     transform: scale(1.05);
 }
 
+/* ========== 🌟 FOOTER ========== */
 footer {
     background-color: #007bff; /* Xanh dương Bootstrap */
     color: white;
+    padding: 20px;
+    text-align: center;
 }
 
 footer a {
     text-decoration: none;
     transition: 0.3s;
+    color: white;
 }
 
 footer a:hover {
     color: #ffeb3b; /* Màu vàng khi hover */
 }
 
+footer h5 {
+    color: #fff;
+}
+
+/* Biểu tượng phương thức thanh toán */
 .payment-icons img {
     width: 50px;
     height: auto;
     margin: 5px;
     filter: brightness(90%);
+    transition: 0.3s ease-in-out;
+}
+
+.payment-icons img:hover {
+    filter: brightness(120%);
+    transform: scale(1.1);
+}
+
+/* ========== 🌟 RESPONSIVE ========== */
+@media screen and (max-width: 768px) {
+    .card {
+        margin-bottom: 20px;
+    }
+
+    .navbar {
+        text-align: center;
+    }
+
+    .btn-primary, .btn-danger {
+        width: 100%;
+    }
 }
