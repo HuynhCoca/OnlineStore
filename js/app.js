@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <h5 class="card-title">${product.title}</h5>
                         <p class="card-text">${product.description.substring(0, 100)}...</p>
                         <p class="card-text"><strong>Giá:</strong> $${product.price}</p>
-                        <button class="btn btn-primary add-to-cart" data-id="${product.id}" data-title="${product.title}" data-price="${product.price}">🛒 Thêm vào giỏ</button>
+                        <button class="btn btn-primary mt-auto add-to-cart" data-id="${product.id}" data-title="${product.title}" data-price="${product.price}">🛒 Thêm vào giỏ</button>
                     </div>
                 </div>
             `;

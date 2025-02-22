@@ -56,14 +56,15 @@ function fetchRelatedProducts(category, currentProductId) {
                 const productCard = document.createElement("div");
                 productCard.classList.add("col-md-3", "mb-4");
                 productCard.innerHTML = `
+                <a href="product.html?id=${product.id}" style="text-decoration: none">
                     <div class="card h-100">
                         <img src="${product.image}" class="card-img-top" alt="${product.title}" style="height: 150px; object-fit: contain;">
                         <div class="card-body">
                             <h6 class="card-title">${product.title}</h6>
                             <p class="card-text text-danger">$${product.price}</p>
-                            <a href="product.html?id=${product.id}" class="btn btn-sm btn-success">🔍 Xem</a>
                         </div>
                     </div>
+                </a>    
                 `;
                 relatedContainer.appendChild(productCard);
             });

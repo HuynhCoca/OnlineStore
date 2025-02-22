@@ -13,6 +13,7 @@ h1, h2, h3 {
 .btn-primary {
     background-color: #007bff;
     border: none;
+    max-height: 37px;
 }
 
 .btn-primary:hover {
