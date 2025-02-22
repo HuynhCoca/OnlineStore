@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
         productList.innerHTML = "";
 
         if (products.length === 0) {
-            // Nếu không có sản phẩm, hiển thị thông báo
             productList.innerHTML = `
                 <div class="text-center">
                     <img src="assets/noProduct.jpeg" alt="Không tìm thấy sản phẩm" style="width: 500px;">
