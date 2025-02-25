@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (products.length === 0) {
             productList.innerHTML = `
                 <div class="text-center">
-                    <img src="assets/noProduct.jpeg" alt="Không tìm thấy sản phẩm" style="width: 500px;">
+                    <img src="assets/noProduct.jpeg" alt="Không tìm thấy sản phẩm" style="max-width: 400px;">
                 </div>
             `;
             return;
