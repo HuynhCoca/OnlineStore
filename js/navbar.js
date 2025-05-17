@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Đã đăng xuất thành công!");
     });
 });
-
 // Cập nhật số lượng giỏ hàng
 function updateCartCount() {
     let user = getCurrentUser();
@@ -32,10 +31,15 @@ function checkAuth() {
 // Lấy thông tin người dùng hiện tại
 function getCurrentUser() {
     let email = localStorage.getItem("currentUser");
-    return email ? JSON.parse(localStorage.getItem(email)) : null;
+    if (email) {
+        return JSON.parse(localStorage.getItem(email));
+    }
+    return null;
 }
 
 // Cập nhật thông tin người dùng
 function updateUser(user) {
     localStorage.setItem(user.email, JSON.stringify(user));
+    updateCartCount();
+    checkAuth();
 }

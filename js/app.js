@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let user = getCurrentUser();
         if (!user) {
             alert("Vui lòng đăng nhập để thêm vào giỏ hàng!");
+            window.location.href = "login.html";
             return;
         }
 
