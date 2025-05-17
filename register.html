@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Ký</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 
     <div class="container mt-5">
         <h2 class="text-center text-primary">📝 Đăng Ký Tài Khoản</h2>
-        <div class="card p-4 shadow">
+        <div class="p-4 shadow">
             <form id="register-form">
                 <div class="mb-3">
                     <label for="name" class="form-label">Họ và Tên</label>
@@ -31,6 +31,11 @@
         </div>
     </div>
 
-    <script src="js/auth.js"></script>
+
+    <!-- JAVASCRIPT -->
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-compat.js"></script>
+    <script type="module" src="./js/firebase-config.js"></script>
+    <script src="./js/auth.js" ></script>
+
 </body>
 </html>
