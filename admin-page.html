@@ -29,7 +29,7 @@
                     <textarea id="description" class="form-control" placeholder="Mô tả sản phẩm" required></textarea>
                 </div>
                 <div class="col-12 text-end">
-                    <button type="submit" class="btn btn-success" onclick="addProduct()">💾 Lưu sản phẩm</button>
+                    <button type="submit" class="btn btn-success">💾 Lưu sản phẩm</button>
                     <button type="reset" class="btn btn-secondary">🧹 Làm mới</button>
                 </div>
             </div>
@@ -46,14 +46,14 @@
                     <th>Thao tác</th>
                 </tr>
             </thead>
-            <div id="product-list">
+            <tbody id="product-list">
                 <!-- Sản phẩm sẽ được render ở đây -->
-            </div>
+            </tbody>
         </table>
     </div>
 
-        <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-compat.js"></script>
     <script type="module" src="./js/firebase-config.js"></script>
-    <script src="admin/admin.js"></script>
+    <script src="./js/admin.js"></script>
 </body>
 </html>

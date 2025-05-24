@@ -125,21 +125,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// Lấy thông tin người dùng hiện tại
-function getCurrentUser() {
-    let email = localStorage.getItem("currentUser");
-    return email ? JSON.parse(localStorage.getItem(email)) : null;
-}
+// // Lấy thông tin người dùng hiện tại
+// function getCurrentUser() {
+//     let email = localStorage.getItem("currentUser");
+//     return email ? JSON.parse(localStorage.getItem(email)) : null;
+// }
 
-// Cập nhật thông tin người dùng vào LocalStorage
-function updateUser(user) {
-    localStorage.setItem(user.email, JSON.stringify(user));
-}
+// // Cập nhật thông tin người dùng vào LocalStorage
+// function updateUser(user) {
+//     // localStorage.setItem(user.email, JSON.stringify(user));
+// }
 
 // Cập nhật số lượng sản phẩm trong giỏ hàng
-function updateCartCount() {
-    let user = getCurrentUser();
-    if (user) {
-        document.getElementById("cart-count").textContent = user.cart.length;
-    }
-}
+// function updateCartCount() {
+//     let user = getCurrentUser();
+//     if (user) {
+//         document.getElementById("cart-count").textContent = user.cart.length;
+//     }
+// }

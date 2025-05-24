@@ -67,23 +67,21 @@ function loginUser() {
         alert("❌ Vui lòng nhập đầy đủ thông tin!");
         return;
     }
-    // Nếu không tìm thấy, thực hiện đăng nhập với Firebase
+
       firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       var user = userCredential.user;
-      console.log("User logged in successfully:", user.uid);
-      // Lưu thông tin người dùng vào localStorage
-      localStorage.setItem("currentUser", email);
-      alert("✅ Đăng nhập thành công!");
-      window.location.href = "index.html";
-      // Lấy thông tin người dùng từ Firestore
       const db = firebase.firestore();
+   
       db.collection("users").doc(user.uid).get()
       .then((doc) => {
         if (doc.exists) {
           const userData = doc.data();
-          localStorage.setItem(email, JSON.stringify(userData));
+          localStorage.setItem("currentUser", JSON.stringify(userData));
           console.log("User data retrieved successfully:", userData);
+          console.log("User logged in successfully:", user.uid);
+          alert("✅ Đăng nhập thành công!");
+          window.location.href = "index.html";
         } else {
           console.log("No such document!");
         }
@@ -100,41 +98,42 @@ function loginUser() {
     });
   }
 // Đăng xuất người dùng
-function logoutUser() {
-    firebase.auth().signOut().then(() => {
-        console.log("User logged out successfully");
+function logOut() {
+  firebase.auth().signOut()
+    .then(() => {
+        console.log("User logged out successfully!");
         localStorage.removeItem("currentUser");
         alert("✅ Đăng xuất thành công!");
         window.location.href = "index.html";
-    }).catch((error) => {
+    })
+    .catch((error) => {
         console.error("Error logging out user: ", error);
     });
 }
-// Kiểm tra trạng thái đăng nhập khi tải trang
+document.getElementById("logout-link").addEventListener("click", () => {
+        logOut();
+    });
+// Kiểm tra trạng thái đăng nhập và cập nhật giao diện
+function checkAuth() {
+  let user = getCurrentUser()
+    if (user) {
+        document.getElementById("user-info").textContent = user.name;
+        document.getElementById("logout-link").style.display = "block";
+        document.getElementById("login-link").style.display = "none";
+  }
+}
+// // Kiểm tra trạng thái đăng nhập khi tải trang
 document.addEventListener("DOMContentLoaded", () => {
     checkAuth();
 });
-// Kiểm tra xem người dùng đã đăng nhập hay chưa
-function isLoggedIn() {
-    return localStorage.getItem("currentUser") !== null;
-}
+// // Kiểm tra xem người dùng đã đăng nhập hay chưa
+// function isLoggedIn() {
+//     return localStorage.getItem("currentUser") !== null;
+// }
 
-// Lấy thông tin người dùng hiện tại
+// // Lấy thông tin người dùng hiện tại
 function getCurrentUser() {
-    let email = localStorage.getItem("currentUser");
-    return email ? JSON.parse(localStorage.getItem(email)) : null;
-}
-
-// Cập nhật thông tin người dùng
-function updateUser(user) {
-    localStorage.setItem(user.email, JSON.stringify(user));
-}
-
-// Kiểm tra trạng thái đăng nhập
-function checkAuth() {
-    let user = getCurrentUser();
-    if (user) {
-        document.getElementById("login-link").style.display = "none";
-        document.getElementById("logout-link").style.display = "block";
-    }
+    let currentUser = localStorage.getItem("currentUser");
+    let userData = JSON.parse(currentUser);
+    return userData ? userData : null;
 }
