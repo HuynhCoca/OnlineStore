@@ -122,7 +122,7 @@ function displayProducts() {
                     </td>
                     <td>
                         <button class="btn btn-danger btn-sm mb-1" onclick="deleteProduct('${productId}')">Xóa</button>
-                        <button class="btn btn-warning btn-sm" onclick="fillFormForUpdate('${productId}', '${product.title.replace(/'/g,"\\'")}', '${product.price}', '${product.description.replace(/'/g,"\\'")}', '${product.image}', '${product.category.replace(/'/g,"\\'")}')">Sửa</button>
+                        <button class="btn btn-warning btn-sm mb-1" onclick="fillFormForUpdate('${productId}', '${product.title.replace(/'/g,"\\'")}', '${product.price}', '${product.description.replace(/'/g,"\\'")}', '${product.image}', '${product.category.replace(/'/g,"\\'")}')">Sửa</button>
                     </td>
                 `;
                 productElement.appendChild(tr);

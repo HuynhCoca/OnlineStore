@@ -89,8 +89,9 @@ function handleCheckout() {
 
 // Lấy thông tin người dùng hiện tại
 function getCurrentUser() {
-    let email = localStorage.getItem("currentUser");
-    return email ? JSON.parse(localStorage.getItem(email)) : null;
+    let currentUser = localStorage.getItem("currentUser");
+    let userData = JSON.parse(currentUser);
+    return userData ? userData : null;
 }
 
 // Cập nhật thông tin người dùng vào LocalStorage
@@ -102,4 +103,12 @@ function updateUser(user) {
 function getCartCount() {
     let user = getCurrentUser();
     return user ? user.cart.length : 0;
+}
+function checkAuth() {
+  let user = getCurrentUser()
+    if (user) {
+        document.getElementById("user-info").textContent = user.name;
+        document.getElementById("logout-link").style.display = "block";
+        document.getElementById("login-link").style.display = "none";
+  }
 }

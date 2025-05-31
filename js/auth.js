@@ -58,8 +58,10 @@ function loginUser() {
     let email = document.getElementById("email").value;
     let password = document.getElementById("password").value;
     
-    if (email === "adminpage@gmail.com" || password === "15243") {
-        alert("Xin chao admin");
+    if (email === "admin@gmail.com" || password === "admin") {
+        alert("Welcome admin");
+        localStorage.setItem("currentUser", JSON.stringify({ name: "Admin", email: "admin@gmail.com"}));
+        console.log("Admin logged in successfully");
         window.location.href = "admin-page.html";
         return;
     }
