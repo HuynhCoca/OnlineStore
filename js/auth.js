@@ -25,7 +25,8 @@ function registerUser() {
 
     firebase.auth().createUserWithEmailAndPassword(email, password)
   .then((userCredential) => {
-    var user = userCredential.user;
+    // Đăng ký thành công
+    var user = userCredential.user;    
     console.log("User registered successfully:", user.uid);
     // Lưu thông tin người dùng vào Firestore
     const db = firebase.firestore();
@@ -33,7 +34,7 @@ function registerUser() {
       name: name,
       email: email,
       password: password,
-      cart: []
+      // cart: []
     })
     .then(() => {
       console.log("User registered successfully!");
@@ -48,6 +49,11 @@ function registerUser() {
   .catch((error) => {
     var errorCode = error.code;
     var errorMessage = error.message;
+    // Xử lý lỗi đăng ký
+    if (errorCode === 'auth/email-already-in-use') {
+        alert("❌ Email đã được đăng ký trước đó. Vui lòng sử dụng email khác.");
+        return;
+    }
     alert("❌ Đăng ký không thành công! Vui lòng thử lại.");
     console.error("Error registering user: ", error);
   });
@@ -79,6 +85,8 @@ function loginUser() {
       .then((doc) => {
         if (doc.exists) {
           const userData = doc.data();
+          userData.uid = user.uid; // Thêm UID vào dữ liệu người dùng
+          // Lưu thông tin người dùng vào LocalStorage
           localStorage.setItem("currentUser", JSON.stringify(userData));
           console.log("User data retrieved successfully:", userData);
           console.log("User logged in successfully:", user.uid);

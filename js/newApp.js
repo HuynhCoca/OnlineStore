@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             <div class="card-body d-grid gap-2">
                                 <h5 class="card-title">${product.title}</h5>
                                 <p class="card-text">${product.description}</p>
-                                <p class="card-text"><strong>Giá:</strong> ${product.price.toLocaleString()}₫</p>
+                                <p class="card-text"><strong>Giá:</strong> ${product.price.toLocaleString()}$</p>
                                 <button class="btn btn-primary mt-auto add-to-cart" data-id="${productId}" data-title="${product.title}" data-price="${product.price}">🛒 Thêm vào giỏ</button
                             </div>
                     </div>
@@ -176,27 +176,50 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         };
     };
-    // thêm sản phẩm vào giỏ hàng của người dùng
-    document.getElementById("product-list").addEventListener("click", (e) => {
+
+    // Thêm sản phẩm vào giỏ hàng của người dùng trên firestore
+    productList.addEventListener("click", (e) => {
         if (e.target.classList.contains("add-to-cart")) {
             const productId = e.target.getAttribute("data-id");
             const productTitle = e.target.getAttribute("data-title");
-            const productPrice = e.target.getAttribute("data-price");
-            addToCart(productId, productTitle, productPrice);
-        }
-    });
-    function addToCart(productId, productTitle, productPrice) {
-        const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        const existingProduct = cart.find(item => item.id === productId);
-        
-        if (existingProduct) {
-            existingProduct.quantity += 1;
-        } else {
-            cart.push({ id: productId, title: productTitle, price: parseFloat(productPrice), quantity: 1 });
-        }
-        
-        localStorage.setItem("cart", JSON.stringify(cart));
-        alert("✅ Sản phẩm đã được thêm vào giỏ hàng!");
-    }
+            const productPrice = parseFloat(e.target.getAttribute("data-price"));
+            const user = JSON.parse(localStorage.getItem("currentUser"));
 
+            if (!user) {
+                alert("❌ Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng!");
+                window.location.href = "login.html";
+                return;
+            }
+
+            const cartRef = firebase.firestore().collection("users").doc(user.uid).collection("cart").doc(productId);
+
+            // Kiểm tra sản phẩm đã có trong giỏ chưa
+            cartRef.get().then((doc) => {
+                if (doc.exists) {
+                    // Nếu đã có, tăng quantity
+                    const currentQty = doc.data().quantity || 1;
+                    cartRef.update({
+                        quantity: currentQty + 1
+                    }).then(() => {
+                        alert(`✅ Đã tăng số lượng ${productTitle} trong giỏ hàng!`);
+                        window.location.reload();
+                    });
+                } else {
+                    // Nếu chưa có, thêm mới
+                    cartRef.set({
+                        title: productTitle,
+                        price: productPrice,
+                        quantity: 1
+                    }).then(() => {
+                        alert(`✅ Đã thêm ${productTitle} vào giỏ hàng!`);
+                        window.location.reload();
+                    });
+                }
+            }).catch((error) => {
+                console.error("Error adding to cart: ", error);
+                alert("❌ Không thể thêm sản phẩm vào giỏ hàng. Vui lòng thử lại.");
+            });
+        }
+    }
+    );
 });

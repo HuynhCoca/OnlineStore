@@ -23,8 +23,11 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Trang Chủ</a></li>
                     <li class="nav-item"><a class="nav-link" href="cart.html">🛒 Giỏ Hàng (<span id="cart-count">0</span>)</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orderHis.html" id="order-his">📜 Lịch sử đơn hàng</a></li>
                     <li class="nav-item"><a class="nav-link" href="login.html" id="login-link">🔑 Đăng Nhập</a></li>
                     <li class="nav-item"><a class="nav-link" href="#" id="logout-link" style="display: none;">🚪 Đăng Xuất</a></li>
+                    <li class="nav-item">
+                        <span class="nav-link text-warning" id="user-info"></span>
                 </ul>
             </div>
         </div>
@@ -49,7 +52,11 @@
         <button class="btn btn-success w-100" id="checkout-btn">🛍️ Thanh Toán</button>
     </div>
 
-    <!-- <script src="js/cart.js"></script>
-    <script src="js/navbar.js"></script> -->
+        <!-- JAVA SCRIPT -->
+    <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-compat.js"></script>
+    <script type="module" src="./js/firebase-config.js"></script>    
+    <script src="js/auth.js"></script>   
+    <script src="js/newCart.js"></script>
+    <script src="js/navbar.js"></script>
 </body>
 </html>

@@ -115,7 +115,7 @@ function displayProducts() {
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
                     <td>${product.title}</td>
-                    <td>${product.price.toLocaleString()}₫</td>
+                    <td>${product.price.toLocaleString()}$</td>
                     <td>${product.category}</td>
                     <td>
                         <img src="${product.image}" alt="${product.title}" style="max-width:80px;max-height:80px;object-fit:cover;border-radius:6px;">
