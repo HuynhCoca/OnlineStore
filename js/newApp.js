@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <div class="card-body d-grid gap-2">
                                     <h5 class="card-title">${product.title}</h5>
                                     <p class="card-text">${product.description}</p>
-                                    <p class="card-text"><strong>Giá:</strong> ${product.price.toLocaleString()}₫</p>
+                                    <p class="card-text"><strong>Giá:</strong> ${product.price.toLocaleString()}$</p>
                                     <button class="btn btn-primary mt-auto add-to-cart" data-id="${product.id}" data-title="${product.title}" data-price="${product.price}">🛒 Thêm vào giỏ</button>
                                 </div>
                         </div>
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 );
             } else {
-                productList.innerHTML = `<div class="text-center text-muted">Không tìm thấy sản phẩm nào.</div>`;
+                productList.innerHTML = `<img src="assets/noProduct.jpeg" alt="Không tìm thấy sản phẩm" style="max-width: 600px; margin: 0 auto;">`;
             }
         })
         .catch((error) => {
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 productList.appendChild(productCard);
             });
             if (querySnapshot.empty) {
-                productList.innerHTML = `<div class="text-center text-muted">Không có sản phẩm nào.</div>`;
+                productList.innerHTML = `<img src="assets/noProduct.jpeg" alt="Không tìm thấy sản phẩm" style="max-width: 300px;">`;
             }   
         })
         .catch((error) => {
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                     <div class="card-body d-grid gap-2">
                                         <h5 class="card-title">${product.title}</h5>
                                         <p class="card-text">${product.description}</p>
-                                        <p class="card-text"><strong>Giá:</strong> ${product.price.toLocaleString()}₫</p>
+                                        <p class="card-text"><strong>Giá:</strong> ${product.price.toLocaleString()}$</p>
                                         <button class="btn btn-primary mt-auto add-to-cart" data-id="${product.id}" data-title="${product.title}" data-price="${product.price}">🛒 Thêm vào giỏ</button
                                     </div>
                             </div>

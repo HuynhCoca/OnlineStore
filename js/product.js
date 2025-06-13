@@ -1,73 +1,107 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get("id");
-    const API_URL = `https://fakestoreapi.com/products/${productId}`;
-
-    fetch(API_URL)
-        .then(response => response.json())
-        .then(product => {
+    const user = getCurrentUser();
+    const productId = new URLSearchParams(window.location.search).get("id");
+    console.log("Product ID:", productId);
+    const productRef = firebase.firestore().collection("products").doc(productId);
+    const cartRef = firebase.firestore().collection("users").doc(user.uid).collection("cart");
+    // Hiển thị thông tin sản phẩm
+    productRef.get().then((doc) => {
+        if (doc.exists) {
+            const product = doc.data();
             document.getElementById("product-title").textContent = product.title;
+            document.getElementById("product-price").textContent = product.price
             document.getElementById("product-description").textContent = product.description;
-            document.getElementById("product-price").textContent = product.price;
-            document.getElementById("product-image").src = product.image;
-            document.getElementById("product-image").alt = product.title;
-
-            document.getElementById("add-to-cart").addEventListener("click", () => {
-                addToCart(product);
-            });
-
-            // Gọi hàm lấy sản phẩm liên quan
-            fetchRelatedProducts(product.category, product.id);
-        })
-        .catch(error => console.error("Lỗi tải sản phẩm:", error));
+            document.getElementById("product-image").src = product.image || "https://via.placeholder.com/150";
+        } else {
+            console.error("Sản phẩm không tồn tại.");
+        }
+    }).catch((error) => {
+        console.error("Lỗi khi lấy thông tin sản phẩm:", error);
+    });
+    // Thêm sản phẩm vào giỏ hàng
+    document.getElementById("add-to-cart").addEventListener("click", () => {
+        addToCart(productId);
+    });
+    // Hiển thị sản phẩm liên quan theo caterory
+    fetchRelatedProducts(productId);
 });
-
-function addToCart(product) {
-    let user = getCurrentUser();
+function addToCart(productId) {
+    const user = getCurrentUser();
+    const productTitle = document.getElementById("product-title").textContent;
+    const productPrice = document.getElementById("product-price").textContent;
+    const cartRef = firebase.firestore().collection("users").doc(user.uid).collection("cart").doc(productId);
     if (!user) {
-        alert("Vui lòng đăng nhập để thêm vào giỏ hàng!");
+        alert("❌ Bạn cần đăng nhập để thêm sản phẩm vào giỏ hàng.");
+        window.location.href = "login.html"; // Chuyển hướng đến trang đăng nhập
         return;
     }
-
-    let cart = user.cart;
-    let existingProduct = cart.find(item => item.id === product.id);
-    if (existingProduct) {
-        existingProduct.quantity++;
-    } else {
-        cart.push({ id: product.id, title: product.title, price: product.price, quantity: 1 });
-    }
-
-    updateUser(user);
-    updateCartCount();
-    alert("🛒 Đã thêm vào giỏ hàng: " + product.title);
-}
-
-function fetchRelatedProducts(category, currentProductId) {
-    fetch(`https://fakestoreapi.com/products/category/${category}`)
-        .then(response => response.json())
-        .then(products => {
-            const relatedContainer = document.getElementById("related-products");
-            relatedContainer.innerHTML = ""; // Xóa nội dung cũ
-
-            // Lọc ra các sản phẩm khác cùng danh mục nhưng không trùng với sản phẩm hiện tại
-            const relatedProducts = products.filter(p => p.id !== parseInt(currentProductId)).slice(0, 4);
-
-            relatedProducts.forEach(product => {
-                const productCard = document.createElement("div");
-                productCard.classList.add("col-md-3", "mb-4");
-                productCard.innerHTML = `
-                <a href="product.html?id=${product.id}" style="text-decoration: none">
-                    <div class="card h-100">
-                        <img src="${product.image}" class="card-img-top" alt="${product.title}" style="height: 150px; object-fit: contain;">
-                        <div class="card-body">
-                            <h6 class="card-title">${product.title}</h6>
-                            <p class="card-text text-danger">$${product.price}</p>
-                        </div>
-                    </div>
-                </a>    
-                `;
-                relatedContainer.appendChild(productCard);
+    
+    cartRef.get().then((doc) => {
+        if (doc.exists) {
+            // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
+            const currentQuantity = doc.data().quantity || 1;
+            cartRef.update({ quantity: currentQuantity + 1 })
+            .then(() => {
+                alert(`✅ Đã tăng số lượng ${productTitle} trong giỏ hàng!`);
             });
-        })
-        .catch(error => console.error("Lỗi tải sản phẩm liên quan:", error));
-}
+        } else {
+            // Nếu sản phẩm chưa có trong giỏ hàng, thêm mới
+            cartRef.set({
+                title: productTitle,
+                price: productPrice,
+                quantity: 1
+            }).then(() => {
+                alert(`✅ Đã thêm ${productTitle} vào giỏ hàng!`);
+            });
+        }
+    }).catch((error) => {
+        console.error("Lỗi khi thêm sản phẩm vào giỏ hàng:", error);
+        alert("❌ Lỗi khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại sau.");
+    });
+};
+function fetchRelatedProducts(productId) {
+    // Lấy thông tin sản phẩm để xác định category
+    const productRef = firebase.firestore().collection("products").doc(productId);
+    productRef.get().then((doc) => {
+        if (doc.exists) {
+            const product = doc.data();
+            const category = product.category;
+            // Tìm các sản phẩm cùng category
+            firebase.firestore().collection("products")
+                .where("category", "==", category)
+                .where(firebase.firestore.FieldPath.documentId(), "!=", productId)
+                .limit(4) // Giới hạn số lượng sản phẩm liên quan
+                .get()
+                .then((querySnapshot) => {
+                    const relatedProductsContainer = document.getElementById("related-products");
+                    relatedProductsContainer.innerHTML = ""; // Xóa nội dung cũ
+                    querySnapshot.forEach((relatedDoc) => {
+                        const relatedProduct = relatedDoc.data();
+                        relatedProduct.id = relatedDoc.id; // Lưu ID sản phẩm để sử dụng trong liên kết
+                        // Tạo phần tử sản phẩm liên quan
+                        const productElement = document.createElement("div");
+                        productElement.className = "related-product";
+                        productElement.classList.add("col-md-3", "mb-4");
+                        productElement.innerHTML = `
+                        <a href="product.html?id=${relatedProduct.id}" style="text-decoration: none">
+                            <div class="card h-100">
+                                <img src="${relatedProduct.image}" class="card-img-top" alt="${relatedProduct.title}" style="height: 150px; object-fit: contain;">
+                                <div class="card-body">
+                                    <h6 class="card-title">${relatedProduct.title}</h6>
+                                    <p class="card-text text-danger">$${relatedProduct.price}</p>
+                                </div>
+                            </div>
+                        </a>  
+                        `;
+                        relatedProductsContainer.appendChild(productElement);
+                    });
+                }).catch((error) => {
+                    console.error("Lỗi khi lấy sản phẩm liên quan:", error);
+                });
+        } else {
+            console.error("Sản phẩm không tồn tại.");
+        }
+    }).catch((error) => {
+        console.error("Lỗi khi lấy thông tin sản phẩm:", error);
+    });
+};
