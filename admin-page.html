@@ -67,6 +67,7 @@
                     <th>Giá</th>
                     <th>Danh mục</th>
                     <th>Hình ảnh</th>
+                    <th>Số lượng</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
@@ -74,6 +75,47 @@
                 <!-- Sản phẩm sẽ được render ở đây -->
             </tbody>
         </table>
+    </div>
+
+    <!-- Modal sửa sản phẩm -->
+    <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form id="edit-product-form">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editProductModalLabel">Sửa sản phẩm</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+            </div>
+            <div class="modal-body">
+              <input type="hidden" id="edit-product-id">
+              <div class="mb-3">
+                <label for="edit-title" class="form-label">Tên sản phẩm</label>
+                <input type="text" class="form-control" id="edit-title" required>
+              </div>
+              <div class="mb-3">
+                <label for="edit-price" class="form-label">Giá</label>
+                <input type="number" class="form-control" id="edit-price" required>
+              </div>
+              <div class="mb-3">
+                <label for="edit-description" class="form-label">Mô tả</label>
+                <textarea class="form-control" id="edit-description" rows="2"></textarea>
+              </div>
+              <div class="mb-3">
+                <label for="edit-image" class="form-label">Ảnh</label>
+                <input type="text" class="form-control" id="edit-image">
+              </div>
+              <div class="mb-3">
+                <label for="edit-category" class="form-label">Danh mục</label>
+                <input type="text" class="form-control" id="edit-category">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+              <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-compat.js"></script>

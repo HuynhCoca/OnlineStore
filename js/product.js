@@ -6,14 +6,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartRef = firebase.firestore().collection("users").doc(user.uid).collection("cart");
     // Hiển thị thông tin sản phẩm
     productRef.get().then((doc) => {
+        const product = doc.data();
         if (doc.exists) {
-            const product = doc.data();
             document.getElementById("product-title").textContent = product.title;
             document.getElementById("product-price").textContent = product.price
             document.getElementById("product-description").textContent = product.description;
             document.getElementById("product-image").src = product.image || "https://via.placeholder.com/150";
         } else {
             console.error("Sản phẩm không tồn tại.");
+        }
+        if (product.quantity <= 0) {
+            document.getElementById("add-to-cart").disabled = true;
+            document.getElementById("add-to-cart").textContent = "Sản phẩm đã hết hàng";
         }
     }).catch((error) => {
         console.error("Lỗi khi lấy thông tin sản phẩm:", error);

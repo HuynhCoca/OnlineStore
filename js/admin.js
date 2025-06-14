@@ -32,7 +32,8 @@ function addProductToFirestore(title, price, description, image, category) {
         price: price,
         description: description,
         image: image,
-        category: category
+        category: category,
+        quantity: 5 // Mặc định số lượng là 5 (để có sản phẩm hiển thị trong bảng)
     })
     .then(() => {
         console.log("Product added successfully!");
@@ -121,6 +122,12 @@ function displayProducts() {
                         <img src="${product.image}" alt="${product.title}" style="max-width:80px;max-height:80px;object-fit:cover;border-radius:6px;">
                     </td>
                     <td>
+                        <div class="d-flex flex-column align-items-center">
+                            <input type="number" min="0" value="${product.quantity ?? 5}" class="form-control form-control-sm quantity-input mb-2" data-id="${productId}" style="width:80px;">
+                            <button class="btn btn-success btn-sm save-qty-btn w-100" data-id="${productId}">Lưu</button>
+                        </div>
+                    </td>
+                    <td class="d-grid gap-2">
                         <button class="btn btn-danger btn-sm mb-1" onclick="deleteProduct('${productId}')">Xóa</button>
                         <button class="btn btn-warning btn-sm mb-1" onclick="fillFormForUpdate('${productId}', '${product.title.replace(/'/g,"\\'")}', '${product.price}', '${product.description.replace(/'/g,"\\'")}', '${product.image}', '${product.category.replace(/'/g,"\\'")}')">Sửa</button>
                     </td>
@@ -140,24 +147,71 @@ function displayProducts() {
 
 // Hàm điền dữ liệu lên form để sửa sản phẩm
 function fillFormForUpdate(id, title, price, description, image, category) {
-    document.getElementById("product-id").value = id;
-    document.getElementById("title").value = title;
-    document.getElementById("price").value = price;
-    document.getElementById("description").value = description;
-    document.getElementById("image").value = image;
-    document.getElementById("category").value = category;
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.getElementById("edit-product-id").value = id;
+    document.getElementById("edit-title").value = title;
+    document.getElementById("edit-price").value = price;
+    document.getElementById("edit-description").value = description;
+    document.getElementById("edit-image").value = image;
+    document.getElementById("edit-category").value = category;
+    // Hiện modal Bootstrap
+    const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
+    modal.show();
 }
 
 // Sửa lại hàm updateProduct để lấy id từ hidden input
-function updateProductFromForm() {
-    const productId = document.getElementById("product-id").value;
-    if (!productId) {
-        alert("Vui lòng chọn sản phẩm để sửa!");
-        return;
-    }
-    updateProduct(productId);
-}
+// function updateProductFromForm() {
+//     const productId = document.getElementById("product-id").value;
+//     if (!productId) {
+//         alert("Vui lòng chọn sản phẩm để sửa!");
+//         return;
+//     }
+//     updateProduct(productId);
+// }
 
 // Gọi hàm hiển thị sản phẩm khi trang admin load
 document.addEventListener("DOMContentLoaded", displayProducts);
+
+document.getElementById("edit-product-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const id = document.getElementById("edit-product-id").value;
+    const title = document.getElementById("edit-title").value;
+    const price = parseFloat(document.getElementById("edit-price").value);
+    const description = document.getElementById("edit-description").value;
+    const image = document.getElementById("edit-image").value;
+    const category = document.getElementById("edit-category").value;
+
+    firebase.firestore().collection("products").doc(id).update({
+        title, price, description, image, category
+    }).then(() => {
+        alert("✅ Đã cập nhật sản phẩm!");
+        // Ẩn modal
+        bootstrap.Modal.getInstance(document.getElementById('editProductModal')).hide();
+        displayProducts();
+    }).catch((error) => {
+        alert("❌ Lỗi khi cập nhật sản phẩm!");
+        console.error(error);
+    });
+});
+
+// Sau khi render bảng, thêm sự kiện cho nút "Lưu" số lượng:
+document.getElementById("product-list").addEventListener("click", function(e) {
+    if (e.target.classList.contains("save-qty-btn")) {
+        const productId = e.target.getAttribute("data-id");
+        const quantityInput = document.querySelector(`.quantity-input[data-id="${productId}"]`);
+        const newQuantity = parseInt(quantityInput.value, 10);
+
+        if (isNaN(newQuantity) || newQuantity < 0) {
+            alert("❌ Số lượng không hợp lệ!");
+            return;
+        }
+
+        firebase.firestore().collection("products").doc(productId).update({
+            quantity: newQuantity
+        }).then(() => {
+            alert("✅ Đã cập nhật số lượng sản phẩm!");
+        }).catch((error) => {
+            alert("❌ Lỗi khi cập nhật số lượng sản phẩm!");
+            console.error(error);
+        });
+    }
+});
