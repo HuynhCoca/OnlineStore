@@ -46,9 +46,9 @@ function displayOrderHistory(user) {
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>
-                    <span class="order-id-hover text-primary" data-id="${orderId}" style="cursor:pointer; text-decoration:none; font-weight:bold;">
-                        ${orderId}
-                    </span>
+                <span class="order-id-link text-primary" data-id="${orderId}" style="cursor:pointer; text-decoration:none; font-weight:bold;">
+                    ${orderId}
+                </span>
                 </td>
                 <td>${createdAt}</td>
                 <td>${order.totalPrice} $</td>
@@ -89,9 +89,9 @@ function displayAllOrders() {
             const row = document.createElement("tr");
             row.innerHTML = `
                 <td>
-                    <span class="order-id-hover text-primary" data-id="${orderId}" style="cursor:pointer; text-decoration:none; font-weight:bold;">
-                        ${orderId}
-                    </span>
+                <span class="order-id-link text-primary" data-id="${orderId}" style="cursor:pointer; text-decoration:none; font-weight:bold;">
+                    ${orderId}
+                </span>
                 </td>
                 <td>${order.userEmail || order.userId}</td>
                 <td>${createdAt}</td>
@@ -125,49 +125,24 @@ function displayAllOrders() {
       });
 }
 
-const popup = document.getElementById("order-detail-popup");
-document.getElementById("order-history").addEventListener("mouseover", function(e) {
-    if (e.target.classList.contains("order-id-hover")) {
+document.getElementById("order-history").addEventListener("click", function(e) {
+    if (e.target.classList.contains("order-id-link")) {
         const orderId = e.target.getAttribute("data-id");
         firebase.firestore().collection("orders").doc(orderId).get().then(doc => {
             if (doc.exists) {
                 const order = doc.data();
-                popup.innerHTML = `
+                let html = `
                     <b>Mã:</b> ${orderId}<br>
                     <b>Sản phẩm:</b>
                     <ul style="padding-left:18px;">
-                        ${order.items.map(item => `<li>${item.title} x${item.quantity}</li>`).join("")}
+                        ${order.items.map(item => `<li>${item.title} x${item.quantity} - ${item.price.toLocaleString()} ₫</li>`).join("")}
                     </ul>
                 `;
-                popup.style.display = "block";
+                document.getElementById("order-detail-body").innerHTML = html;
+                const modal = new bootstrap.Modal(document.getElementById('orderDetailModal'));
+                modal.show();
             }
-        });
-
-        // Di chuyển popup theo chuột và kiểm tra vị trí
-        function movePopup(ev) {
-            const popupHeight = popup.offsetHeight || 200;
-            let top = ev.pageY + 10;
-            // Nếu vượt quá đáy màn hình thì hiển thị lên trên
-            if (top + popupHeight > window.scrollY + window.innerHeight) {
-                top = ev.pageY - popupHeight - 10;
-            }
-            popup.style.left = (ev.pageX + 20) + "px";
-            popup.style.top = top + "px";
-        }
-        document.addEventListener("mousemove", movePopup);
-
-        // Xóa sự kiện khi rời chuột
-        e.target.addEventListener("mouseleave", function handler() {
-            popup.style.display = "none";
-            popup.innerHTML = "";
-            document.removeEventListener("mousemove", movePopup);
-            e.target.removeEventListener("mouseleave", handler);
         });
     }
 });
-// document.getElementById("order-history").addEventListener("mouseout", function(e) {
-//     if (e.target.classList.contains("order-id-hover")) {
-//         popup.style.display = "none";
-//         popup.innerHTML = "";
-//     }
-// });
+

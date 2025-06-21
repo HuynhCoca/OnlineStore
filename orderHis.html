@@ -54,8 +54,19 @@
     </div>       
     
     <!-- Popup chi tiết đơn hàng -->
-    <div id="order-detail-popup" style="display:none; position:absolute; z-index:9999; background:#fff; border:1px solid #ccc; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15); padding:12px; min-width:250px;"></div>
-
+    <div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderDetailModalLabel">Chi tiết đơn hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Đóng"></button>
+                </div>
+                <div class="modal-body" id="order-detail-body">
+                    <!-- Nội dung chi tiết đơn hàng sẽ được render ở đây -->
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- JAVA SCRIPT -->
     <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-compat.js"></script>
     <script type="module" src="./js/firebase-config.js"></script>    

@@ -113,17 +113,22 @@ function displayProducts() {
                 const product = doc.data();
                 const productId = doc.id;
                 // Tạo một dòng bảng cho mỗi sản phẩm
+                let lowStockBadge = '';
+                if (product.quantity <= 3) {
+                    lowStockBadge = `<span class="badge bg-danger ms-2">Sắp hết hàng</span>`;
+                }
+
                 const tr = document.createElement("tr");
                 tr.innerHTML = `
-                    <td>${product.title}</td>
+                    <td>${product.title} ${lowStockBadge}</td>
                     <td>${product.price.toLocaleString()}$</td>
                     <td>${product.category}</td>
                     <td>
                         <img src="${product.image}" alt="${product.title}" style="max-width:80px;max-height:80px;object-fit:cover;border-radius:6px;">
                     </td>
                     <td>
-                        <div class="d-flex flex-column align-items-center">
-                            <input type="number" min="0" value="${product.quantity ?? 5}" class="form-control form-control-sm quantity-input mb-2" data-id="${productId}" style="width:80px;">
+                        <div class="d-flex flex-column">
+                            <input type="number" min="0" value="${product.quantity ?? 10}" class="form-control form-control-sm quantity-input mb-2" data-id="${productId}">
                             <button class="btn btn-success btn-sm save-qty-btn w-100" data-id="${productId}">Lưu</button>
                         </div>
                     </td>
