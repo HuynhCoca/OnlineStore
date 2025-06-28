@@ -95,7 +95,7 @@ function displayAllOrders() {
                 </td>
                 <td>${order.userEmail || order.userId}</td>
                 <td>${createdAt}</td>
-                <td>${order.totalPrice} ₫</td>
+                <td>${order.totalPrice} $</td>
                 <td class="d-grid gap-2">${statusSelect}
                     <button class="btn btn-primary btn-sm save-status" data-id="${orderId}">Lưu</button>
                 </td>
@@ -135,7 +135,7 @@ document.getElementById("order-history").addEventListener("click", function(e) {
                     <b>Mã:</b> ${orderId}<br>
                     <b>Sản phẩm:</b>
                     <ul style="padding-left:18px;">
-                        ${order.items.map(item => `<li>${item.title} x${item.quantity} - ${item.price.toLocaleString()} ₫</li>`).join("")}
+                        ${order.items.map(item => `<li>${item.title} x${item.quantity} - ${item.price.toLocaleString()} $</li>`).join("")}
                     </ul>
                 `;
                 document.getElementById("order-detail-body").innerHTML = html;
